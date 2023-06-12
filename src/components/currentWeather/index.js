@@ -1,36 +1,36 @@
-import "./style.css";
+import styles from "./styles.module.scss"
 
 const CurrentWeather = ({data}) => {
     return (
-        <div className="weather">
-            <div className="top">
+        <div className={styles.weatherInfo}>
+            <div className={styles.mainInfo}>
                 <div>
-                    <p className="city">{data.city}</p>
-                    <p className="wheather-descrription">{data.weather[0].description}</p>
+                    <p className={styles.mainInfo__city}>{data.city}</p>
+                    <p className={styles.mainInfo__wheatherDescrription}>{data.weather[0].description}</p>
                 </div>
-                <img alt="wheather" className="wheather-icon" src={`icons/${data.weather[0].icon}.svg`} />
+                <img alt="wheather" className={styles.mainInfo__wheatherIcon} src={`icons/${data.weather[0].icon}.svg`} />
             </div>
-            <div className="bottom">
-                <p className="temperature">{Math.round(data.main.temp)}℃</p>
-                <div className="details">
-                    <div className="parameter-row">
-                        <span className="parameter-label">Details</span>
+            <div className={styles.detailInfo}>
+                <p className={styles.detailInfo__temperature}>{Math.round(data.main.temp)}℃</p>
+                <div className={styles.detailInfo__details}>
+                    <div className={styles.detailInfo__parameterRow}>
+                        <span className={styles.detailInfo__parameterLabel}>Details</span>
                     </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Feels like</span>
-                        <span className="parameter-value">{Math.round(data.main.feels_like)}℃</span>
+                    <div className={styles.detailInfo__parameterRow}>
+                        <span className={styles.detailInfo__parameterLabel}>Feels like</span>
+                        <span className={styles.detailInfo__parameterValue}>{Math.round(data.main.feels_like)}℃</span>
                     </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Wind</span>
-                        <span className="parameter-value">{data.wind.speed}km/h</span>
+                    <div className={styles.detailInfo__parameterRow}>
+                        <span className={styles.detailInfo__parameterLabel}>Wind</span>
+                        <span className={styles.detailInfo__parameterValue}>{data.wind.speed}km/h</span>
                     </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Humidity</span>
-                        <span className="parameter-value">{data.main.humidity}%</span>
+                    <div className={styles.detailInfo__parameterRow}>
+                        <span className={styles.detailInfo__parameterLabel}>Humidity</span>
+                        <span className={styles.detailInfo__parameterValue}>{data.main.humidity}%</span>
                     </div>
-                    <div className="parameter-row">
-                        <span className="parameter-label">Pressure</span>
-                        <span className="parameter-value">{data.main.pressure}hPa</span>
+                    <div className={styles.detailInfo__parameterRow}>
+                        <span className={styles.detailInfo__parameterLabel}>Pressure</span>
+                        <span className={styles.detailInfo__parameterValue}>{data.main.pressure}hPa</span>
                     </div>
                 </div>
             </div>
