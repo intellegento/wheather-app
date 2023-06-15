@@ -1,10 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { GEO_API_URL, geoAPIOptions } from "../../api";
 
 const Search = ({onSeaarchChange}) => {
 
     const [search, setSearch] = useState(null);
+    useEffect(()=>{
+        console.log('component is loaded')
+    })
 
     const loadOptions = async (inputValue) => {
         // try {
@@ -17,19 +20,33 @@ const Search = ({onSeaarchChange}) => {
         //   } catch (error) {
         //     console.error(error);
         //   }
-        return fetch(`${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`, geoAPIOptions)
-        .then(response => response.json())
-        .then(response => {
+        try {
+            const url = new URL(`${GEO_API_URL}/cities`);
+            const minPopulation = 1000000;
+            url.searchParams.append('minPopulation', minPopulation);
+            url.searchParams.append('namePrefix', inputValue);
+            console.log('url: ', url.toString());
+            const response = await fetch(url.toString(), geoAPIOptions);
+            const responseJson = await response.json();
+            console.log(responseJson.data);
             return {
-                options: response.data.map((city) => {
+                options: responseJson?.data?.map((city) => {
                     return {
                         value: `${city.latitude} ${city.longitude}`,
                         label: `${city.name}, ${city.countryCode}`,
                     }
-                })
+                }) || []
             }
-        })
-        .catch(err => console.log(err));
+        }catch(error){
+            console.error(error);
+            return;
+        }
+        // return fetch(`${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`, geoAPIOptions)
+        // .then(response => response.json())
+        // .then(response => {
+        //    return 
+        // })
+        // .catch(err => console.log(err));
     }
 
     const handleOnChaange = (searchData) => {
